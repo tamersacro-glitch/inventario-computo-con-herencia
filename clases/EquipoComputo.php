@@ -58,16 +58,26 @@ abstract class EquipoComputo
     /** Resume los datos comunes; las clases derivadas agregan sus propios datos. */
     public function getResumen(): string
     {
-        return sprintf(
-            '%s %s %s | %s | %d GB RAM | %s | %s',
+        $resumen = sprintf(
+            '%s %s %s | Serie: %s | Estado: %s',
             $this->getTipo(),
             $this->marca,
             $this->modelo,
-            $this->procesador,
-            $this->memoriaRam,
-            $this->almacenamiento,
+            $this->numeroSerie,
             $this->estado
         );
+
+        // Solo muestra especificaciones de computadora cuando existen.
+        if ($this->procesador !== '' || $this->memoriaRam > 0 || $this->almacenamiento !== '') {
+            $resumen .= sprintf(
+                ' | %s | %d GB RAM | %s',
+                $this->procesador,
+                $this->memoriaRam,
+                $this->almacenamiento
+            );
+        }
+
+        return $resumen;
     }
 
     /** Prepara los datos para guardarlos en la sesión. */

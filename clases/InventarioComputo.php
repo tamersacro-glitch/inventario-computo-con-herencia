@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/PCEscritorio.php';
 require_once __DIR__ . '/Laptop.php';
+require_once __DIR__ . '/Telefono.php';
+require_once __DIR__ . '/Television.php';
 
 /** Administra cualquier objeto que herede de EquipoComputo. */
 class InventarioComputo
@@ -61,6 +63,20 @@ class InventarioComputo
                 $comunes[5],
                 (float) ($datos['tamanoPantalla'] ?? 15.6),
                 (int) ($datos['duracionBateria'] ?? 4),
+                $estado
+            );
+        }
+
+        if (($datos['tipo'] ?? '') === 'Telefono') {
+            return new Telefono($comunes[0], $comunes[1], $comunes[2], $estado);
+        }
+
+        if (($datos['tipo'] ?? '') === 'Television') {
+            return new Television(
+                $comunes[0],
+                $comunes[1],
+                $comunes[2],
+                (float) ($datos['pulgadas'] ?? 0),
                 $estado
             );
         }
